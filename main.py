@@ -22,8 +22,8 @@ def main():
     myfont = pygame.font.SysFont("monospace", 15)
 
     w, h = pygame.display.get_surface().get_size()
-    for row in range(-3, 3):
-        for col in range(-3, 3):
+    for row in range(-4, 4):
+        for col in range(-4, 4):
             hex = Hexagone(row, col)
             hex.oddr_to_cube()
             hex.cube_to_axial()
