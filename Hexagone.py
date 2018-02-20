@@ -27,7 +27,7 @@ class Hexagone:
             (x, y - size),
             (x - width / 2, y - size / 2),
             (x - width / 2, y + size / 2)
-        ), 1)
+        ), 3)
 
     def oddr_to_cube(self):
         x = self.col - (self.row - (self.row & 1)) / 2

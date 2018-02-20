@@ -6,15 +6,15 @@ from Hexagone import Hexagone
 
 
 def main():
-
     pygame.init()
     display = pygame.display.set_mode((1280, 720), RESIZABLE)
 
     white = (255, 255, 255)
     blue = (0, 0, 255)
+    red = (255, 0, 0)
 
-    #bg = pygame.image.load("BarbarianPrince_map2.jpg")
-    #display.blit(bg, (0, 0))
+    # bg = pygame.image.load("BarbarianPrince_map2.jpg")
+    # display.blit(bg, (0, 0))
     display.fill(white)
 
     Hexagones = []
@@ -28,8 +28,8 @@ def main():
             hex.oddr_to_cube()
             hex.cube_to_axial()
             p = hex.hex_to_pixel()
-            hex.q = p.x + (w/2)
-            hex.r = p.y + (h/2)
+            hex.q = p.x + (w / 2)
+            hex.r = p.y + (h / 2)
 
             label = myfont.render(str(hex.row) + "." + str(hex.col), 1, (255, 0, 0))
             display.blit(label, (hex.q, hex.r))
@@ -41,15 +41,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
-                print(" CLICK ")
-                print(mouse_x)
-                print(mouse_y)
 
-                hex1 = Hexagone(0,0)
-                hex1.pixel_to_hex(mouse_x, mouse_y)
-                print("Hexagone : [" + str(hex1.q) + " | " + str(hex1.r) + "]")
-            elif event.type == pygame.MOUSEBUTTONUP:
-                print(" CLICK UP")
+                for hex in Hexagones:
+                    d = sqrt( (mouse_x - hex.q)**2 + (mouse_y - hex.r)**2 )
+                    if d < hex.size:
+                        hex.draw(display, red)
+                        break
             elif event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
