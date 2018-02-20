@@ -21,13 +21,13 @@ class Hexagone:
         height = size * 2
         width = sqrt(3) / 2 * height
         pygame.draw.polygon(display, color, (
-                        (x, y + size),
-                        (x + width / 2, y + size / 2),
-                        (x + width / 2, y - size / 2),
-                        (x, y - size),
-                        (x - width / 2, y - size / 2),
-                        (x - width / 2, y + size / 2)
-                    ), 1)
+            (x, y + size),
+            (x + width / 2, y + size / 2),
+            (x + width / 2, y - size / 2),
+            (x, y - size),
+            (x - width / 2, y - size / 2),
+            (x - width / 2, y + size / 2)
+        ), 1)
 
     def oddr_to_cube(self):
         x = self.col - (self.row - (self.row & 1)) / 2

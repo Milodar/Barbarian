@@ -30,8 +30,8 @@ def main():
     #        hex.draw(display,blue)
 
     w, h = pygame.display.get_surface().get_size()
-    for row in range(-5, 5):
-        for col in range(-5, 5):
+    for row in range(-3, 3):
+        for col in range(-3, 3):
             hex = Hexagone(row, col)
             hex.oddr_to_cube()
             hex.cube_to_axial()
@@ -51,6 +51,8 @@ def main():
                 print(" CLICK ")
                 print(mouse_x)
                 print(mouse_y)
+
+                pixel_to_hex(mouse_x, mouse_y)
             elif event.type == pygame.MOUSEBUTTONUP:
                 print(" CLICK UP")
             elif event.type == pygame.QUIT:
