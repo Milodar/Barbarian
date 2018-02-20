@@ -49,3 +49,8 @@ class Hexagone:
 
         return Point(x, y)
 
+    def pixel_to_hex(self, x, y):
+        q = (x * sqrt(3) / 3 - y / 3) / self.size
+        r = y * 2 / 3 / self.size
+        self.q = q
+        self.r = r

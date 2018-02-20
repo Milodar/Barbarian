@@ -17,17 +17,9 @@ def main():
     #display.blit(bg, (0, 0))
     display.fill(white)
 
-    myfont = pygame.font.SysFont("monospace", 15)
+    Hexagones = []
 
-    #p = Point(100, 100)
-    #for i in range(0, 2):
-    #    for j in range(0, 2):
-    #        hex = Hexagone(i, j)
-    #        p = hex.hex_to_pixel()
-    #        hex = Hexagone(p.x, p.y)
-    #        label = myfont.render(str(i) + "." + str(j), 1, (255, 0, 0))
-    #        display.blit(label, (hex.q, hex.r))
-    #        hex.draw(display,blue)
+    myfont = pygame.font.SysFont("monospace", 15)
 
     w, h = pygame.display.get_surface().get_size()
     for row in range(-3, 3):
@@ -42,6 +34,7 @@ def main():
             label = myfont.render(str(hex.row) + "." + str(hex.col), 1, (255, 0, 0))
             display.blit(label, (hex.q, hex.r))
 
+            Hexagones.append(hex)
             hex.draw(display, blue)
 
     while True:
@@ -52,7 +45,9 @@ def main():
                 print(mouse_x)
                 print(mouse_y)
 
-                pixel_to_hex(mouse_x, mouse_y)
+                hex1 = Hexagone(0,0)
+                hex1.pixel_to_hex(mouse_x, mouse_y)
+                print("Hexagone : [" + str(hex1.q) + " | " + str(hex1.r) + "]")
             elif event.type == pygame.MOUSEBUTTONUP:
                 print(" CLICK UP")
             elif event.type == pygame.QUIT:
@@ -60,5 +55,5 @@ def main():
                 sys.exit()
         pygame.display.update()
 
-#offset to cube, cube to axial
+
 main()
