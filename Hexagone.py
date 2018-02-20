@@ -14,6 +14,8 @@ class Hexagone:
         self.y = 0
         self.z = 0
 
+        self.selected = False
+
     def draw(self, display, color):
         size = self.size
         x = self.q

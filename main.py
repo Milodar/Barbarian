@@ -45,6 +45,11 @@ def main():
                 for hex in Hexagones:
                     d = sqrt( (mouse_x - hex.q)**2 + (mouse_y - hex.r)**2 )
                     if d < hex.size:
+                        for h in Hexagones:
+                            if h.selected:
+                                h.selected = False
+                                h.draw(display, blue)
+                        hex.selected = True
                         hex.draw(display, red)
                         break
             elif event.type == pygame.QUIT:
