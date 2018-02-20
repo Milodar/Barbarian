@@ -1,38 +1,62 @@
-import os, sys
-import pygame as pg  # lazy but responsible (avoid namespace flooding)
-
-import time
-
-x = 0
-y = 0
+import pygame, sys
+from pygame.locals import *
+from math import *
+from Point import *
+from Hexagone import Hexagone
 
 
-def main(Surface):
-    game_event_loop()
-    blue = (0, 255, 255)
-    pg.draw.rect(Surface, blue, (x, y, 100, 50))
+def main():
 
+    pygame.init()
+    display = pygame.display.set_mode((1280, 720), RESIZABLE)
 
-def game_event_loop():
-    for event in pg.event.get():
-        if event.type == pg.MOUSEBUTTONDOWN:
-            Mouse_x, Mouse_y = pg.mouse.get_pos()
-            print(" CLICK ")
-            print(Mouse_x)
-            print(Mouse_y)
-        elif event.type == pg.MOUSEBUTTONUP:
-            print(" CLICK UP")
-        elif event.type == pg.QUIT:
-            print(" QUIT")
+    white = (255, 255, 255)
+    blue = (0, 0, 255)
 
+    #bg = pygame.image.load("BarbarianPrince_map2.jpg")
+    #display.blit(bg, (0, 0))
+    display.fill(white)
 
-pg.init()
-Screen = pg.display.set_mode((500, 400), 0, 32)
+    myfont = pygame.font.SysFont("monospace", 15)
 
-while 1:
-    x += 1
+    #p = Point(100, 100)
+    #for i in range(0, 2):
+    #    for j in range(0, 2):
+    #        hex = Hexagone(i, j)
+    #        p = hex.hex_to_pixel()
+    #        hex = Hexagone(p.x, p.y)
+    #        label = myfont.render(str(i) + "." + str(j), 1, (255, 0, 0))
+    #        display.blit(label, (hex.q, hex.r))
+    #        hex.draw(display,blue)
 
-    y += 1
-    main(Screen)
-    pg.display.update()
-    time.sleep(.300)
+    w, h = pygame.display.get_surface().get_size()
+    for row in range(-5, 5):
+        for col in range(-5, 5):
+            hex = Hexagone(row, col)
+            hex.oddr_to_cube()
+            hex.cube_to_axial()
+            p = hex.hex_to_pixel()
+            hex.q = p.x + (w/2)
+            hex.r = p.y + (h/2)
+
+            label = myfont.render(str(hex.row) + "." + str(hex.col), 1, (255, 0, 0))
+            display.blit(label, (hex.q, hex.r))
+
+            hex.draw(display, blue)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                print(" CLICK ")
+                print(mouse_x)
+                print(mouse_y)
+            elif event.type == pygame.MOUSEBUTTONUP:
+                print(" CLICK UP")
+            elif event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+        pygame.display.update()
+
+#offset to cube, cube to axial
+main()
