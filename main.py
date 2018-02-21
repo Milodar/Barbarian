@@ -31,14 +31,14 @@ def main():
             hex.oddq_to_cube()
             hex.cube_to_axial()
             p = hex.hex_to_pixel()
-            hex.q = p.x + (w / 2)
-            hex.r = p.y + (h / 2)
+            hex.q = p.x + 448.5
+            hex.r = p.y + 580
 
-            label = myfont.render(str(hex.row) + "." + str(hex.col), 1, (255, 0, 0))
-            display.blit(label, (hex.q, hex.r))
+            #label = myfont.render(str(hex.row) + "." + str(hex.col), 1, (255, 0, 0))
+            #display.blit(label, (hex.q, hex.r))
 
             Hexagones.append(hex)
-            hex.draw(display, blue)
+            hex.draw(display, white)
 
     while True:
         for event in pygame.event.get():
@@ -51,7 +51,7 @@ def main():
                         for h in Hexagones:
                             if h.selected:
                                 h.selected = False
-                                h.draw(display, blue)
+                                h.draw(display, white)
                         hex.selected = True
                         hex.draw(display, red)
                         break

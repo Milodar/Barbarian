@@ -5,7 +5,7 @@ import pygame
 
 class Hexagone:
     def __init__(self, col, row):
-        self.size = 25
+        self.size = 25.7
         self.q = 0
         self.r = 0
         self.col = col
@@ -29,7 +29,7 @@ class Hexagone:
             (x - size, y),
             (x - size / 2, y - width / 2),
             (x + size / 2, y - width / 2)
-        ), 3)
+        ), 4)
 
     def oddq_to_cube(self):
         x = self.col
