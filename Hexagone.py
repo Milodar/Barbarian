@@ -56,3 +56,15 @@ class Hexagone:
         r = (-x / 3 + sqrt(3)/3 * y) / self.size
         self.q = q
         self.r = r
+
+    def neighbours(self):
+        parity = self.col & 1
+        oddq_directions = [
+            [Hexagone(self.col + 1, self.row + 0), Hexagone(self.col + 1, self.row - 1),
+             Hexagone(self.col + 0, self.row - 1), Hexagone(self.col - 1, self.row - 1),
+             Hexagone(self.col - 1, self.row + 0), Hexagone(self.col + 0, self.row + 1)],
+            [Hexagone(self.col + 1, self.row + 1), Hexagone(self.col + 1, self.row + 0),
+             Hexagone(self.col + 0, self.row - 1), Hexagone(self.col - 1, self.row + 0),
+             Hexagone(self.col - 1, self.row + 1), Hexagone(self.col + 0, self.row + 1)]
+        ]
+        return oddq_directions[parity]
