@@ -7,7 +7,7 @@ from Hexagone import Hexagone
 
 def main():
     pygame.init()
-    display = pygame.display.set_mode((1280, 720), RESIZABLE)
+    display = pygame.display.set_mode((1280, 800), RESIZABLE)
 
     white = (255, 255, 255)
     blue = (0, 0, 255)
@@ -22,10 +22,10 @@ def main():
     myfont = pygame.font.SysFont("monospace", 15)
 
     w, h = pygame.display.get_surface().get_size()
-    for row in range(-4, 4):
+    for row in range(-7, 7):
         for col in range(-4, 4):
             hex = Hexagone(row, col)
-            hex.oddr_to_cube()
+            hex.oddq_to_cube()
             hex.cube_to_axial()
             p = hex.hex_to_pixel()
             hex.q = p.x + (w / 2)

@@ -23,17 +23,17 @@ class Hexagone:
         height = size * 2
         width = sqrt(3) / 2 * height
         pygame.draw.polygon(display, color, (
-            (x, y + size),
-            (x + width / 2, y + size / 2),
-            (x + width / 2, y - size / 2),
-            (x, y - size),
-            (x - width / 2, y - size / 2),
-            (x - width / 2, y + size / 2)
+            (x + size, y),
+            (x + size / 2, y + width / 2),
+            (x - size / 2, y + width / 2),
+            (x - size, y),
+            (x - size / 2, y - width / 2),
+            (x + size / 2, y - width / 2)
         ), 3)
 
-    def oddr_to_cube(self):
-        x = self.col - (self.row - (self.row & 1)) / 2
-        z = self.row
+    def oddq_to_cube(self):
+        x = self.col
+        z = self.row - (self.col - (self.col & 1)) / 2
         y = -x - z
         self.x = x
         self.y = y
@@ -46,13 +46,13 @@ class Hexagone:
         self.r = r
 
     def hex_to_pixel(self):
-        x = self.size * sqrt(3) * (self.q + self.r / 2)
-        y = self.size * 3 / 2 * self.r
+        x = self.size * 3/2 * self.q
+        y = self.size * sqrt(3) * (self.r + self.q/2)
 
         return Point(x, y)
 
     def pixel_to_hex(self, x, y):
-        q = (x * sqrt(3) / 3 - y / 3) / self.size
-        r = y * 2 / 3 / self.size
+        q = x * 2/3 / self.size
+        r = (-x / 3 + sqrt(3)/3 * y) / self.size
         self.q = q
         self.r = r
