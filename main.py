@@ -22,7 +22,7 @@ def main():
     myfont = pygame.font.SysFont("monospace", 15)
 
     w, h = pygame.display.get_surface().get_size()
-    for row in range(-7, 7):
+    for row in range(-6, 7):
         for col in range(-4, 4):
             hex = Hexagone(row, col)
             hex.oddq_to_cube()
