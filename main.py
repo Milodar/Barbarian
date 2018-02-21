@@ -21,6 +21,8 @@ def main():
     myfont = pygame.font.SysFont("monospace", 15)
     display.blit(bg, (0, 0))
 
+    barbare = pygame.image.load("src/img/barbare.png")
+
     hexagones = []
     myGrid = Grid()
 
@@ -33,8 +35,8 @@ def main():
             hex.q = p.x + 64
             hex.r = p.y + 90
 
-            label = myfont.render(str(hex.row) + "." + str(hex.col), 1, (255, 0, 0))
-            display.blit(label, (hex.q, hex.r))
+            #label = myfont.render(str(hex.row) + "." + str(hex.col), 1, (255, 0, 0))
+            #display.blit(label, (hex.q, hex.r))
 
             hexagones.append(hex)
             hex.draw(display, white)
@@ -44,6 +46,8 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
 
+                display.blit(bg, (0, 0))
+
                 for hex in hexagones:
                     d = sqrt((mouse_x - hex.q) ** 2 + (mouse_y - hex.r) ** 2)
                     if d < hex.size:
@@ -52,15 +56,11 @@ def main():
                             if h.selected:
                                 h.selected = False
                         hex.selected = True
-                        lstNeighbours = hex.neighbours()
-                        for neighbour in lstNeighbours:
-                            for h in hexagones:
-                                if neighbour.col == h.col and neighbour.row == h.row:
-                                    h.draw(display, green)
+                        #lstNeighbours = hex.neighbours()
+
                         hex.draw(display, red)
-                        print(str(hex.row)+':'+str(hex.col))
-                        terrain = myGrid.terrain[hex.row][hex.col]
-                        print(terrain.name)
+
+                        display.blit(barbare, (hex.q - 17/2, hex.r - 25/2))
                         break
             elif event.type == pygame.QUIT:
                 pygame.quit()
