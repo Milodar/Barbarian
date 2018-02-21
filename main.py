@@ -1,26 +1,23 @@
-import pygame, sys
+import pygame
 from pygame.locals import *
 from math import *
-from Point import *
 from Hexagone import Hexagone
 from tkinter import *
 
+
 def main():
     pygame.init()
-    width, height = 1920, 1080
+    width, height = 1200, 750
 
     display = pygame.display.set_mode((width, height), RESIZABLE)
 
-    white = (255, 255, 255)
     blue = (0, 0, 255)
     red = (255, 0, 0)
 
     bg = pygame.image.load("src\img\Map3_clean_reduced.png")
-    #bg = pygame.transform.scale(bg, (width, height))
     display.blit(bg, (0, 0))
-    #display.fill(white)
 
-    Hexagones = []
+    hexagones = []
 
     myfont = pygame.font.SysFont("monospace", 15)
 
@@ -37,7 +34,7 @@ def main():
             label = myfont.render(str(hex.row) + "." + str(hex.col), 1, (255, 0, 0))
             display.blit(label, (hex.q, hex.r))
 
-            Hexagones.append(hex)
+            hexagones.append(hex)
             hex.draw(display, blue)
 
     while True:
@@ -45,10 +42,10 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
 
-                for hex in Hexagones:
-                    d = sqrt( (mouse_x - hex.q)**2 + (mouse_y - hex.r)**2 )
+                for hex in hexagones:
+                    d = sqrt((mouse_x - hex.q) ** 2 + (mouse_y - hex.r) ** 2)
                     if d < hex.size:
-                        for h in Hexagones:
+                        for h in hexagones:
                             if h.selected:
                                 h.selected = False
                                 h.draw(display, blue)
