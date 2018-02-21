@@ -3,27 +3,30 @@ from pygame.locals import *
 from math import *
 from Point import *
 from Hexagone import Hexagone
-
+from tkinter import *
 
 def main():
     pygame.init()
-    display = pygame.display.set_mode((1280, 800), RESIZABLE)
+    width, height = 1920, 1080
+
+    display = pygame.display.set_mode((width, height), RESIZABLE)
 
     white = (255, 255, 255)
     blue = (0, 0, 255)
     red = (255, 0, 0)
 
-    # bg = pygame.image.load("BarbarianPrince_map2.jpg")
-    # display.blit(bg, (0, 0))
-    display.fill(white)
+    bg = pygame.image.load("src\img\Map3_clean_reduced.png")
+    #bg = pygame.transform.scale(bg, (width, height))
+    display.blit(bg, (0, 0))
+    #display.fill(white)
 
     Hexagones = []
 
     myfont = pygame.font.SysFont("monospace", 15)
 
     w, h = pygame.display.get_surface().get_size()
-    for row in range(-7, 7):
-        for col in range(-4, 4):
+    for row in range(-10, 10):
+        for col in range(-11, 12):
             hex = Hexagone(row, col)
             hex.oddq_to_cube()
             hex.cube_to_axial()

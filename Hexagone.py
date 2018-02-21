@@ -5,7 +5,7 @@ import pygame
 
 class Hexagone:
     def __init__(self, col, row):
-        self.size = 50
+        self.size = 25
         self.q = 0
         self.r = 0
         self.col = col
