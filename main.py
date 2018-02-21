@@ -14,6 +14,7 @@ def main():
     white = (255, 255, 255)
     blue = (0, 0, 255)
     red = (255, 0, 0)
+    green = (0, 255, 0)
 
     bg = pygame.image.load("src\img\Map3_clean_reduced.png")
     display.blit(bg, (0, 0))
@@ -47,10 +48,15 @@ def main():
                     d = sqrt((mouse_x - hex.q) ** 2 + (mouse_y - hex.r) ** 2)
                     if d < hex.size:
                         for h in hexagones:
+                            h.draw(display, white)
                             if h.selected:
                                 h.selected = False
-                                h.draw(display, white)
                         hex.selected = True
+                        lstNeighbours = hex.neighbours()
+                        for neighbour in lstNeighbours:
+                            for h in hexagones:
+                                if neighbour.col == h.col and neighbour.row == h.row:
+                                    h.draw(display, green)
                         hex.draw(display, red)
                         break
             elif event.type == pygame.QUIT:
