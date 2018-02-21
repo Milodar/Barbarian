@@ -17,18 +17,22 @@ def main():
     red = (255, 0, 0)
 
     bg = pygame.image.load("src\img\Map3_clean_reduced.png")
-    myfont = pygame.font.SysFont("monospace", 15)
     display.blit(bg, (0, 0))
 
     hexagones = []
-    myGrid = Grid()
 
+    myfont = pygame.font.SysFont("monospace", 15)
+
+    myGrid = Grid()
+    #w, h = pygame.display.get_surface().get_size()
     for row in range(20):
         for col in range(20):
             hex = Hexagone(row, col)
             hex.oddq_to_cube()
             hex.cube_to_axial()
             p = hex.hex_to_pixel()
+            #hex.q = p.x + 448.5
+            #hex.r = p.y + 580
             hex.q = p.x + 64
             hex.r = p.y + 90
 
@@ -37,6 +41,7 @@ def main():
 
             hexagones.append(hex)
             hex.draw(display, white)
+
 
     while True:
         for event in pygame.event.get():
@@ -53,8 +58,10 @@ def main():
                         hex.selected = True
                         hex.draw(display, red)
                         print(str(hex.row)+':'+str(hex.col))
+
                         terrain = myGrid.terrain[hex.row][hex.col]
                         print(terrain.name)
+
                         break
             elif event.type == pygame.QUIT:
                 pygame.quit()
