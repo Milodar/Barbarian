@@ -1,6 +1,6 @@
 from Terrain import Terrain as t
 class Grid:
-    def __init__(self):
+    def __init__(self ):
         self.terrain = []
         self.terrain = [
             [t(1), t(6), t(6), t(4), t(4), t(1), t(1), t(3), t(6), t(3), t(3), t(4), t(1), t(5), t(2), t(2), t(3), t(6), t(6), t(6)],
