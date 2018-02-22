@@ -1,9 +1,14 @@
 import pygame
-from pygame.locals import *
 from math import *
+
+from pygame.rect import Rect
+
+from Game import Game
 from Hexagone import Hexagone
 from tkinter import *
 from Grid import Grid
+from Player import Player
+
 from random import randint
 
 
@@ -14,24 +19,11 @@ def launchdice(nbdice):
         dice.append(die)
     return dice
 
-
 def main():
     pygame.init()
     width, height = 1200, 750
-
     display = pygame.display.set_mode((width, height))
 
-    white = (255, 255, 255)
-    blue = (0, 0, 255)
-    red = (255, 0, 0)
-    green = (0, 255, 0)
-    black = (0, 0, 0)
-
-    bg = pygame.image.load("src\img\Map3_clean_reduced.png")
-    myfont = pygame.font.SysFont("Trebuchet MS", 20)
-    display.blit(bg, (0, 0))
-
-    barbare = pygame.image.load("src/img/barbare.png")
     die1 = pygame.image.load("src/img/die_1.png")
     die2 = pygame.image.load("src/img/die_2.png")
     die3 = pygame.image.load("src/img/die_3.png")
@@ -39,26 +31,18 @@ def main():
     die5 = pygame.image.load("src/img/die_5.png")
     die6 = pygame.image.load("src/img/die_6.png")
 
-    hexagones = []
-    myGrid = Grid()
+    white, blue, red, green, black = (255, 255, 255), (0, 0, 255), (255, 0, 0), (0, 255, 0), (0, 0, 0)
+    row, col = 15, 20
+    round_end = 5
+    player = Player()
 
-    for row in range(15):
-        for col in range(20):
-            hex = Hexagone(col, row)
-            hex.oddq_to_cube()
-            hex.cube_to_axial()
-            p = hex.hex_to_pixel()
-            hex.q = p.x + 64
-            hex.r = p.y + 90
+    grid = Grid(row, col, display, white, red, player)
+    game = Game(grid, player, round_end)
 
-            # label = myfont.render(str(hex.row) + "." + str(hex.col), 1, (255, 0, 0))
-            # display.blit(label, (hex.q, hex.r))
+    game.grid.init()
 
-            hexagones.append(hex)
-            hex.draw(display, white)
-
-    labelDice = myfont.render("Lancé du premier dé,", 1, black)
-    labelDice2 = myfont.render("cliquer sur cette case", 1, black)
+    labelDice = grid.font.render("Lancé du premier dé,", 1, black)
+    labelDice2 = grid.font.render("cliquer sur cette case", 1, black)
 
     launch = True
 
@@ -72,7 +56,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
 
-                display.blit(bg, (0, 0))
+                game.grid.clear()
 
                 if launch:
                     if r.left < mouse_x < (r.left + r.width) and r.top < mouse_y < (r.top + r.height):
@@ -100,33 +84,23 @@ def main():
 
                         display.blit(dieimg, (r.left + r.width * 1 / 3, r.top + r.height * 2 / 3))
 
-                        for hex in hexagones:
+                        for hex in game.grid.hexagones:
                             if hexdepart.col == hex.col and hexdepart.row == hex.row:
                                 hex.selected = True
-                                hex.draw(display, red)
-
-                                display.blit(barbare, (hex.q - 17 / 2, hex.r - 25 / 2))
+                                game.grid.draw_player(hex)
 
                         launch = False
                 else:
-                    for hex in hexagones:
+                    for hex in game.grid.hexagones:
                         d = sqrt((mouse_x - hex.q) ** 2 + (mouse_y - hex.r) ** 2)
                         if d < hex.size:
-                            for h in hexagones:
-                                h.draw(display, white)
-                                if h.selected:
-                                    h.selected = False
-                            hex.selected = True
-                            # lstNeighbours = hex.neighbours()
-
-                            hex.draw(display, red)
-
-                            display.blit(barbare, (hex.q - 17 / 2, hex.r - 25 / 2))
+                            player.move(game, hex, game.test_move(hex))
+                            #game.end_turn()
                             break
+
             elif event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
         pygame.display.update()
-
 
 main()

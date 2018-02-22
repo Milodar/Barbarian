@@ -1,0 +1,23 @@
+import pygame
+
+
+class Player :
+    def __init__(self):
+        self.token = pygame.image.load("src/img/barbare.png")
+        self.gold = 0
+
+    def move(self, game, hex, move):
+        if move:
+            game.grid.draw_player(hex)
+        else:
+            for h in game.grid.hexagones:
+                if h.selected:
+                    game.grid.draw_player(h)
+
+    @staticmethod
+    def quote(number_quote):
+        switcher = {
+            "Yes": "Je me suis déplacé",
+            "No": "Je ne peux pas m'y déplacer",
+        }
+        print(switcher.get(number_quote))
