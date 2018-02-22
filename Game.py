@@ -57,13 +57,13 @@ class Game:
     def draw_chat(self):
         pygame.draw.rect(self.grid.display, self.chat_color, self.chat, 3)
 
-    def game_launch(self):
-        if self.status == "Not playing" or self.status == "Beginning":
+    def game_launch(self, clic):
+        if self.status == "Not playing":
             labelDice = self.grid.font.render("Lancé du premier dé,", 1, self.chat_color)
             labelDice2 = self.grid.font.render("cliquer sur cette case", 1, self.chat_color)
             self.grid.display.blit(labelDice, (self.chat.left + self.chat.width * 1 / 7, self.chat.top + self.chat.height * 1 / 10))
             self.grid.display.blit(labelDice2, (self.chat.left + self.chat.width * 1 / 7, self.chat.top + self.chat.height * 1 / 10 + 25))
-            if self.status == "Beginning":
+            if clic:
                 self.status = "Playing"
 
     def draw_dice(self):
@@ -85,7 +85,7 @@ class Game:
                 if player_start.col == hex.col and player_start.row == hex.row:
                     hex.selected = True
                     self.grid.draw_player(hex)
-        self.status = "Beginning"
+            self.game_launch(True)
 
 
     @staticmethod

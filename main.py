@@ -28,7 +28,7 @@ def main():
 
     while game.end():
         game.draw_chat()
-        game.game_launch()
+        game.game_launch(False)
 
         rDay = Rect(875, 650, 150, 75)
         pygame.draw.rect(display, black, rDay, 3)
@@ -49,9 +49,8 @@ def main():
                 mouse_x, mouse_y = pygame.mouse.get_pos()
 
                 game.grid.clear()
-                if game.status != "Playing":
+                if game.status == "Not playing":
                     game.start(mouse_x, mouse_y)
-                    game.status = "Beginning"
                 else:
                     inGrid = False
                     for hex in game.grid.hexagones:
