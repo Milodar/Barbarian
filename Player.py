@@ -9,6 +9,7 @@ class Player :
     def move(self, game, hex, move):
         if move:
             game.grid.draw_player(hex)
+            game.draw_dice()
         else:
             for h in game.grid.hexagones:
                 if h.selected:

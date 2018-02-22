@@ -30,7 +30,7 @@ class Grid:
         self.clear_color = clear_color
         self.player_color = player_color
         self.player_token = player.token
-        self.font = pygame.font.SysFont("monospace", 15)
+        self.font = pygame.font.SysFont("Trebuchet MS", 15)
         for row in range(row_grid):
             for col in range(col_grid):
                 hex = Hexagone(col, row)
@@ -57,3 +57,6 @@ class Grid:
     def draw_player(self, hex):
         hex.draw(self.display, self.player_color)
         self.display.blit(self.player_token, (hex.q - 17 / 2, hex.r - 25 / 2))
+
+    def draw_dice(self, img, pos):
+        self.display.blit(img, (pos.left + pos.width * 1 / 3, pos.top + pos.height * 2 / 3))
