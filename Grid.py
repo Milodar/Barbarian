@@ -1,9 +1,11 @@
+import pygame
+
 from Terrain import Terrain as t
 from Hexagone import Hexagone
 
 
 class Grid:
-    def __init__(self, row_grid, col_grid, display, clear_color, player_color, player_token, start_pos):
+    def __init__(self, row_grid, col_grid, screen, clear_color, player_color, player, start_pos):
         self.terrain = [
             [t(1), t(6), t(6), t(4), t(4), t(1), t(1), t(3), t(6), t(3), t(3), t(4), t(1), t(5), t(2), t(2), t(3), t(6), t(6), t(6)],
             [t(1), t(4), t(4), t(4), t(1), t(1), t(1), t(4), t(1), t(4), t(3), t(4), t(5), t(1), t(5), t(1), t(3), t(6), t(6), t(6)],
@@ -23,13 +25,14 @@ class Grid:
             [t(4), t(1), t(1), t(1), t(4), t(1), t(4), t(1), t(2), t(1), t(1), t(1), t(2), t(1), t(1), t(1), t(4), t(1), t(4), t(1)]
         ]
         self.hexagones = []
-        self.display = display
+        self.display = screen
+        self.bg = pygame.image.load("src\img\Map3_clean_reduced.png")
         self.clear_color = clear_color
         self.player_color = player_color
-        self.player_token = player_token
+        self.player_token = player.token
         self.start_pos_row = start_pos.row
         self.start_pos_col = start_pos.col
-
+        self.font = pygame.font.SysFont("monospace", 15)
         for row in range(row_grid):
             for col in range(col_grid):
                 hex = Hexagone(col, row)
@@ -42,31 +45,19 @@ class Grid:
                     hex.selected = True
                 self.hexagones.append(hex)
 
-    def move(self, hex):
-        move = False
+    def init(self):
+        self.display.blit(self.bg, (0, 0))
+        self.clear()
+        for h in self.hexagones:
+            if h.selected:
+                self.draw_player(h)
+                break
+
+    def clear(self):
+        self.display.blit(self.bg, (0, 0))
         for h in self.hexagones:
             h.draw(self.display, self.clear_color)
-            if h.selected:
-                lstNeighbours = h.neighbours()
-                compteur = lstNeighbours.__len__()
-                for i in range(compteur):
-                    neighbourplayer = lstNeighbours[i]
-                    neighbourplayer_row = neighbourplayer.row
-                    neighbourplayer_col = neighbourplayer.col
-                    print(str(i) + " : [" + str(neighbourplayer_row) + ";" + str(
-                        neighbourplayer_col) + "]")
-                    if hex.row == neighbourplayer_row and hex.col == neighbourplayer_col:
-                        move = True
-                        h.selected = False
-                        print("Neighbour : " + str(i) + " -- Row : " + str(
-                            neighbourplayer.row) + " | Col : " + str(neighbourplayer.col))
 
-        if move:
-            hex.selected = True
-            hex.draw(self.display, self.player_color)
-            self.display.blit(self.player_token, (hex.q - 17 / 2, hex.r - 25 / 2))
-        else:
-            for h in self.hexagones:
-                if h.selected:
-                    h.draw(self.display, self.player_color)
-                    self.display.blit(self.player_token, (h.q - 17 / 2, h.r - 25 / 2))
+    def draw_player(self, hex):
+        hex.draw(self.display, self.player_color)
+        self.display.blit(self.player_token, (hex.q - 17 / 2, hex.r - 25 / 2))
