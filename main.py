@@ -102,11 +102,18 @@ def main():
 
                         launch = False
                 else:
+                    inGrid = False
                     for hex in game.grid.hexagones:
                         d = sqrt((mouse_x - hex.q) ** 2 + (mouse_y - hex.r) ** 2)
                         if d < hex.size:
+                            inGrid = True
                             player.move(game, hex, game.test_move(hex))
                             break
+                    if not inGrid:
+                        for hex in game.grid.hexagones:
+                            if hex.selected:
+                                game.grid.draw_player(hex)
+                                break
 
             elif event.type == pygame.QUIT:
                 pygame.quit()
