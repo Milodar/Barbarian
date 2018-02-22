@@ -49,16 +49,22 @@ def main():
                 mouse_x, mouse_y = pygame.mouse.get_pos()
 
                 game.grid.clear()
-                if game.status == "Playing":
+                if game.status != "Playing":
+                    game.start(mouse_x, mouse_y)
+                    game.status = "Beginning"
+                else:
+                    inGrid = False
                     for hex in game.grid.hexagones:
                         d = sqrt((mouse_x - hex.q) ** 2 + (mouse_y - hex.r) ** 2)
                         if d < hex.size:
+                            inGrid = True
                             player.move(game, hex, game.test_move(hex))
                             break
-                else:
-                    game.start(mouse_x, mouse_y)
-                    game.status = "Beginning"
-
+                    if not inGrid:
+                        for hex in game.grid.hexagones:
+                            if hex.selected:
+                                game.grid.draw_player(hex)
+                                break
 
             elif event.type == pygame.QUIT:
                 pygame.quit()
