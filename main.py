@@ -23,23 +23,14 @@ def main():
 
     barbare = pygame.image.load("src/img/barbare.png")
 
-    hexagones = []
-    myGrid = Grid()
+    hexagone_start = Hexagone(0, 0)
+    myGrid = Grid(5, 10, display, white, red, barbare, hexagone_start)
 
-    for row in range(20):
-        for col in range(20):
-            hex = Hexagone(row, col)
-            hex.oddq_to_cube()
-            hex.cube_to_axial()
-            p = hex.hex_to_pixel()
-            hex.q = p.x + 64
-            hex.r = p.y + 90
-
-            #label = myfont.render(str(hex.row) + "." + str(hex.col), 1, (255, 0, 0))
-            #display.blit(label, (hex.q, hex.r))
-
-            hexagones.append(hex)
-            hex.draw(display, white)
+    for h in myGrid.hexagones:
+        h.draw(display, white)
+        if h.selected:
+            h.draw(display, red)
+            display.blit(barbare, (h.q - 17 / 2, h.r - 25 / 2))
 
     while True:
         for event in pygame.event.get():
@@ -48,19 +39,14 @@ def main():
 
                 display.blit(bg, (0, 0))
 
-                for hex in hexagones:
+                for hex in myGrid.hexagones:
                     d = sqrt((mouse_x - hex.q) ** 2 + (mouse_y - hex.r) ** 2)
                     if d < hex.size:
-                        for h in hexagones:
-                            h.draw(display, white)
-                            if h.selected:
-                                h.selected = False
-                        hex.selected = True
-                        #lstNeighbours = hex.neighbours()
-
-                        hex.draw(display, red)
-
-                        display.blit(barbare, (hex.q - 17/2, hex.r - 25/2))
+                        myGrid.move(hex)
+                        print(str(hex.row) + ':' + str(hex.col))
+                        terrain = myGrid.terrain[hex.row][hex.col]
+                        print(terrain.name)
+                        print("\n")
                         break
             elif event.type == pygame.QUIT:
                 pygame.quit()

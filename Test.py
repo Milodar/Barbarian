@@ -24,11 +24,11 @@ def main():
     hexagones = []
     myGrid = Grid()
     lstNeighboursPlayer = []
-    
 
-    for row in range(20):
-        for col in range(20):
-            hex = Hexagone(row, col)
+
+    for row in range(10):
+        for col in range(5):
+            hex = Hexagone(col, row)
             hex.oddq_to_cube()
             hex.cube_to_axial()
             p = hex.hex_to_pixel()
@@ -55,6 +55,7 @@ def main():
                             if h.selected:
                                 h.selected = False
                         hex.selected = True
+                        hex.draw(display, green)
 
                         lstNeighbours = hex.neighbours()
                         compteur = lstNeighboursPlayer.__len__()
@@ -67,7 +68,7 @@ def main():
                             print( str(i) + " : [" + str(neighbourplayer_row) + ";" + str(neighbourplayer_col) + "]")
                             if hex.row == neighbourplayer_row and hex.col == neighbourplayer_col:
                                 hex.draw(display, red)
-                                print( "Neighbour : " + str(i) + " -- Row : " + str(neighbourplayer.row) + " | Col : " + str(neighbourplayer.col))
+                                print("Neighbour : " + str(i) + " -- Row : " + str(neighbourplayer.row) + " | Col : " + str(neighbourplayer.col))
                                 break
 
                         lstNeighboursPlayer = lstNeighbours
