@@ -3,7 +3,7 @@ class Game:
         self.player = player
         self.grid = grid
         self.max_round = number_round
-        self.current_round = 0
+        self.current_round = 1
 
     def end(self):
         if self.current_round == self.max_round or self.player.gold >= 700:
