@@ -5,11 +5,13 @@ class Player :
     def __init__(self):
         self.token = pygame.image.load("src/img/barbare.png")
         self.gold = 0
+        self.health = 50
 
     def move(self, game, hex, move):
         if move:
             game.grid.draw_player(hex)
             game.draw_dice()
+            game.current_round+=1
         else:
             for h in game.grid.hexagones:
                 if h.selected:

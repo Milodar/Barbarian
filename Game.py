@@ -11,7 +11,7 @@ class Game:
         self.player = player
         self.grid = grid
         self.max_round = number_round
-        self.current_round = 0
+        self.current_round = 1
         self.chat = Rect(900, 25, 250, 100)
         self.chat_color = (0, 0, 0)
         self.img_dice = {

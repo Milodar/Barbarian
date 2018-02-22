@@ -30,7 +30,7 @@ class Grid:
         self.clear_color = clear_color
         self.player_color = player_color
         self.player_token = player.token
-        self.font = pygame.font.SysFont("Trebuchet MS", 15)
+        self.font = pygame.font.SysFont("Trebuchet MS", 20)
         for row in range(row_grid):
             for col in range(col_grid):
                 hex = Hexagone(col, row)
